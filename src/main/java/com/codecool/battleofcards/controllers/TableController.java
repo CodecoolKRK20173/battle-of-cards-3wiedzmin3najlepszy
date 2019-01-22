@@ -25,4 +25,3 @@ public class TableController{
         table = new Table();
         gameView = new GameView();
     }
-}
