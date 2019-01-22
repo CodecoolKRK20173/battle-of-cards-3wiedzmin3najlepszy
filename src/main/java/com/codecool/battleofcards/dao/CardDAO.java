@@ -9,12 +9,20 @@ import java.util.ArrayList;
 
 public class CardDAO implements ICardDAO {
     private DatabaseConnector databaseConnector;
+    private static CardDAO single_instance = null;
 
-    public CardDAO() {
+    private CardDAO() {
         this.databaseConnector = new DatabaseConnector();
         databaseConnector.connectToDatabase();
         createSampleTable();
         insertSampleToTable();
+    }
+
+    public static CardDAO getInstance() {
+        if (single_instance == null)
+            single_instance = new CardDAO();
+
+        return single_instance;
     }
 
     private void createSampleTable() {
@@ -51,7 +59,7 @@ public class CardDAO implements ICardDAO {
 
             stmt = databaseConnector.c.createStatement();
             String sql = "INSERT INTO CARDS (ID,NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
-                    "VALUES (1, 'Imie1', 10, 10, 10, 10, 10);";
+                    "VALUES (1, 'SampleName', 10, 10, 10, 10, 10);";
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -121,7 +129,6 @@ public class CardDAO implements ICardDAO {
         try {
             databaseConnector.connectToDatabase();
             databaseConnector.c.setAutoCommit(false);
-            System.out.println("Opened database successfully");
 
             stmt = databaseConnector.c.createStatement();
             String sql = "DELETE from CARDS where ID= " + id + ";";
@@ -139,12 +146,11 @@ public class CardDAO implements ICardDAO {
     @Override
     public ArrayList<Card> getAllCards() throws DAOException {
         ArrayList<Card> cardsList = new ArrayList<>();
-
         Statement stmt = null;
+
         try {
             databaseConnector.connectToDatabase();
             databaseConnector.c.setAutoCommit(false);
-            System.out.println("Opened database successfully");
 
             stmt = databaseConnector.c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM CARDS");
@@ -178,7 +184,6 @@ public class CardDAO implements ICardDAO {
         try {
             databaseConnector.connectToDatabase();
             databaseConnector.c.setAutoCommit(false);
-            System.out.println("Opened database successfully");
 
             stmt = databaseConnector.c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM CARDS WHERE ID = " + id);
