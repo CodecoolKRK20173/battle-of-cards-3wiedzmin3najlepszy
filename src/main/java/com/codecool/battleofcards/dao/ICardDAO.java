@@ -1,14 +1,15 @@
 package com.codecool.battleofcards.dao;
 
+import com.codecool.battleofcards.services.Card;
 import java.util.ArrayList;
 
 
 public interface ICardDAO {
 
-    //createASampleTable()
-    //insertNew(String name, int stat1, int stat2, int stat3 ...)
-    //update(int id)
-    //delete(int id)
-    //getAllCards()
-    //getCardById(int id)
+    void createASampleTable();
+    void insertNew(String name, int strength, int rapidity, int magicPower, int defence, int intelligence);
+    void update(int id);
+    void delete(int id);
+    ArrayList<Card> getAllCards();
+    Card getCardById(int id);
 }
