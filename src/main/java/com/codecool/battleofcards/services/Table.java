@@ -6,13 +6,13 @@ import java.util.*;
 
 public class Table{
     private List<Player> players = new ArrayList<Player>();
-    Dealer dealer;
-    Deck deck;
+    Dealer dealer = new Dealer();
+    Deck deck = new Deck();
 
-    public Table() {
+/*    public Table() {
         dealer = new Dealer();
         deck = new Deck();
-    }
+    }*/
 
     public int compareCards(int atrIndex) {
         return 0;

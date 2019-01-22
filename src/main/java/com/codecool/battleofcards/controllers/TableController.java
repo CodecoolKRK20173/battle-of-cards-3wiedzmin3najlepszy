@@ -16,7 +16,7 @@ public class TableController{
     }
 
     public void playRound(){
-        Table.checkIfGameOn();
+        table.checkIfGameOn();
 
 
     }
