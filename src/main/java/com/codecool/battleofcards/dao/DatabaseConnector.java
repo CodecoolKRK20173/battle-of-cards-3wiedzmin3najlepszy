@@ -3,10 +3,11 @@ package com.codecool.battleofcards.dao;
 import java.sql.*;
 
 public class DatabaseConnector {
+    Connection c;
 
 
     public void connectToDatabase(){
-        Connection c = null;
+        c = null;
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:test.db");

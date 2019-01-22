@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public interface ICardDAO {
 
-    void createASampleTable();
+    void createSampleTable();
     void insertNew(String name, int strength, int rapidity, int magicPower, int defence, int intelligence);
-    void update(int id);
+    void update(int id, String name, int strength, int rapidity, int magicPower, int defence, int intelligence);
     void delete(int id);
     ArrayList<Card> getAllCards();
     Card getCardById(int id);
