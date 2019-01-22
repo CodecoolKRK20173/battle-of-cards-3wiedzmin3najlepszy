@@ -8,31 +8,28 @@ import java.util.ArrayList;
 public class CardDAO implements ICardDAO {
     private DatabaseConnector databaseConnector;
 
-    CardDAO(){
+    public CardDAO(){
         this.databaseConnector = new DatabaseConnector();
         databaseConnector.connectToDatabase();
         createSampleTable();
+        insertSampleToTable();
     }
 
-    @Override
-    public void createSampleTable() {
+    private void createSampleTable() {
         Statement stmt = null;
 
         try {
             databaseConnector.connectToDatabase();
-
             stmt = databaseConnector.c.createStatement();
             String sql = "CREATE TABLE CARDS " +
                     "(ID INT PRIMARY KEY     NOT NULL," +
                     " NAME           TEXT    NOT NULL, " +
                     " STRENGTH       INT     NOT NULL, " +
                     " RAPIDITY       INT     NOT NULL, " +
-                    " MAGIC POWER    INT     NOT NULL, " +
+                    " MAGICPOWER     INT     NOT NULL, " +
                     " DEFENCE        INT     NOT NULL, " +
-                    " INTELLIGENCE    INT     NOT NULL";
-            stmt.executeUpdate(sql);
-            sql = "INSERT INTO CARDS (ID,NAME,STRENGTH,RAPIDITY,MAGIC POWER,DEFENCE,INTELLIGENCE) " +
-                    "VALUES (1, 'Imie1', 10, 10, 10, 10, 10);";
+                    " INTELLIGENCE   INT     NOT NULL)";
+            System.out.println("Jestem tu");
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -42,6 +39,28 @@ public class CardDAO implements ICardDAO {
             System.exit(0);
         }
         System.out.println("Table created successfully");
+    }
+
+    private void insertSampleToTable() {
+        Statement stmt = null;
+
+        try {
+            databaseConnector.connectToDatabase();
+            databaseConnector.c.setAutoCommit(false);
+
+            stmt = databaseConnector.c.createStatement();
+            String sql = "INSERT INTO CARDS (ID,NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
+                    "VALUES (1, 'Imie1', 10, 10, 10, 10, 10);";
+            stmt.executeUpdate(sql);
+
+            stmt.close();
+            databaseConnector.c.commit();
+            databaseConnector.c.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Insert successfully");
     }
 
     @Override
@@ -75,17 +94,17 @@ public class CardDAO implements ICardDAO {
         try {
             databaseConnector.connectToDatabase();
             databaseConnector.c.setAutoCommit(false);
-            System.out.println("Opened database successfully");
 
             stmt = databaseConnector.c.createStatement();
-            String sql = "UPDATE CARDS SET name = " + name + " , "
-                    + "strength = " + strength + " , "
-                    + "rapidity = " + rapidity + " , "
-                    + "magic power = " + magicPower + " , "
-                    + "defence = " + defence + " , "
-                    + "intelligence = " + intelligence + " , "
-                    + "WHERE id = " + id;
+            String sql = "UPDATE CARDS\n" +
+                    "SET\n" +
+                    " NAME = '"+ name + "',\n" +
+                    " STRENGTH ="+ String.valueOf(strength) + "\n" +
+                    " WHERE\n" +
+                    " ID=" + String.valueOf(id) + ";";
             stmt.executeUpdate(sql);
+            databaseConnector.c.commit();
+
 
             stmt.close();
             databaseConnector.c.commit();
@@ -94,7 +113,7 @@ public class CardDAO implements ICardDAO {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
-        System.out.println("Records created successfully");
+        System.out.println("Updated successfully");
     }
 
     @Override
@@ -107,7 +126,7 @@ public class CardDAO implements ICardDAO {
             System.out.println("Opened database successfully");
 
             stmt = databaseConnector.c.createStatement();
-            String sql = "DELETE from CARDS where ID= "+ 2 + ";";
+            String sql = "DELETE from CARDS where ID= "+ id + ";";
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -117,11 +136,11 @@ public class CardDAO implements ICardDAO {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
-        System.out.println("Records created successfully");
+        System.out.println("Deleted successfully");
     }
 
     @Override
-    public ArrayList<Card> getAllCards() {
+    public ArrayList<Card> getAllCards(){
         ArrayList<Card> cardsList = new ArrayList<>();
 
         Statement stmt = null;
@@ -137,18 +156,17 @@ public class CardDAO implements ICardDAO {
                 String name = rs.getString("name");
                 int  strength = rs.getInt("strength");
                 int rapidity  = rs.getInt("rapidity");
-                int  magicPower = rs.getInt("magic power");
+                int  magicPower = rs.getInt("magicpower");
                 int defence = rs.getInt("defence");
-                int intelligence = rs.getInt("inteligence");
+                int intelligence = rs.getInt("intelligence");
                 cardsList.add(new Card(name, strength, rapidity, magicPower, defence, intelligence));
             }
 
             rs.close();
             stmt.close();
             databaseConnector.c.close();
-        } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
+        } catch ( SQLException e ) {
+
         }
         System.out.println("Operation done successfully");
 
@@ -156,7 +174,7 @@ public class CardDAO implements ICardDAO {
     }
 
     @Override
-    public Card getCardById(int id) {
+    public Card getCardById(int id){
         Card card;
 
         Statement stmt = null;
@@ -171,9 +189,9 @@ public class CardDAO implements ICardDAO {
             String name = rs.getString("name");
             int  strength = rs.getInt("strength");
             int rapidity  = rs.getInt("rapidity");
-            int  magicPower = rs.getInt("magic power");
+            int  magicPower = rs.getInt("magicpower");
             int defence = rs.getInt("defence");
-            int intelligence = rs.getInt("inteligence");
+            int intelligence = rs.getInt("intelligence");
 
             card = new Card(name, strength, rapidity, magicPower, defence, intelligence);
 
@@ -183,6 +201,7 @@ public class CardDAO implements ICardDAO {
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
+            return null;
         }
         System.out.println("Operation done successfully");
 
