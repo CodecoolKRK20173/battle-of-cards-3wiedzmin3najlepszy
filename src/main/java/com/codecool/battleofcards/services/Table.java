@@ -10,9 +10,11 @@ public class Table {
     Dealer dealer = new Dealer();
     Deck deck = new Deck();
 
-    /*
-     * public Table() { dealer = new Dealer(); deck = new Deck(); }
-     */
+    public Table(ArrayList<Player> players) {
+        this.players = players;
+        dealer.addCards(deck.getCards());
+        dealer.dealTo(players);
+    }
 
     public int compareCards(int atrIndex) {
         AttributeType attrType = AttributeType.values()[atrIndex - 1];
@@ -40,7 +42,6 @@ public class Table {
             winner.setActivePlayer(true);
         }
 
-        // delete cards and add to dealer
         for (Player player : playersInRound) {
             dealer.addCard(player.getTopCard());
             player.deleteTopCard();

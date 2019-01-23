@@ -1,14 +1,19 @@
 package com.codecool.battleofcards.dao;
 
+import com.codecool.battleofcards.services.Card;
+
 import java.util.ArrayList;
 
 
 public interface ICardDAO {
 
-    //createASampleTable()
-    //insertNew(String name, int stat1, int stat2, int stat3 ...)
-    //update(int id)
-    //delete(int id)
-    //getAllCards()
-    //getCardById(int id)
+    void insertNew(String name, int strength, int rapidity, int magicPower, int defence, int intelligence) throws DAOException;
+
+    void update(int id, String name, int strength, int rapidity, int magicPower, int defence, int intelligence) throws DAOException;
+
+    void delete(int id) throws DAOException;
+
+    ArrayList<Card> getAllCards() throws DAOException;
+
+    Card getCardById(int id) throws DAOException;
 }
