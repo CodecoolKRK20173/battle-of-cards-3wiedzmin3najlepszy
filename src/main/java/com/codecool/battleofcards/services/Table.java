@@ -5,7 +5,7 @@ import com.codecool.battleofcards.dao.CardDAO;
 import java.util.*;
 
 public class Table{
-    private List<Player> players = new ArrayList<Player>();
+    private ArrayList<Player> players = new ArrayList<Player>();
     Dealer dealer = new Dealer();
     Deck deck = new Deck();
 
@@ -32,6 +32,11 @@ public class Table{
                 return false;
         }
         return true;
+    }
+
+    public void initializeGame(){
+        dealer.addCards(deck.getCards());
+        dealer.dealTo(players);
     }
 
 }

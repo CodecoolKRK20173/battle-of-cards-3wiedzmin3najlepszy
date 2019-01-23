@@ -18,6 +18,10 @@ public class Dealer{
         cardsToSend.addAll(cards);
     }
 
+    public void addCard(Card card){
+        cardsToSend.add(card);
+    }
+
     public void dealTo(ArrayList<Player> players){
         Iterator<Card> iter = cardsToSend.iterator();
         while(!cardsToSend.isEmpty()){
@@ -30,6 +34,7 @@ public class Dealer{
                 }
             }
         }
+        cardsToSend.clear();
     }
 
 
