@@ -57,6 +57,10 @@ public class Table {
         return result;
     }
 
+    public List<Player> getPlayersInRound() {
+        return playersInRound;
+    }
+
     public Player getCurrentPlayer() {
         for (Player player : players) {
             if (player.getActivePlayer())
