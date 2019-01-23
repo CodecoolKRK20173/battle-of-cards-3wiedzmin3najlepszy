@@ -9,20 +9,12 @@ import java.util.ArrayList;
 
 public class CardDAO implements ICardDAO {
     private DatabaseConnector databaseConnector;
-    private static CardDAO single_instance = null;
 
-    private CardDAO() {
-        this.databaseConnector = new DatabaseConnector();
+    public CardDAO() {
+        this.databaseConnector = DatabaseConnector.getInstance();
         databaseConnector.connectToDatabase();
         createSampleTable();
         insertSampleToTable();
-    }
-
-    public static CardDAO getInstance() {
-        if (single_instance == null)
-            single_instance = new CardDAO();
-
-        return single_instance;
     }
 
     private void createSampleTable() {
