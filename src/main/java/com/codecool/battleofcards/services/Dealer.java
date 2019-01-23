@@ -1,43 +1,38 @@
 package com.codecool.battleofcards.services;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
+public class Dealer {
+    ArrayList<Card> cardsToSend = new ArrayList<>();
 
-public class Dealer{
-    ArrayList<Card> cardsToSend;
-
-
-    public void dealTo(Player player){
+    public void dealTo(Player player) {
         player.addCards(cardsToSend);
         cardsToSend.clear();
     }
 
-    public void addCards(ArrayList<Card> cards){
+    public void addCards(ArrayList<Card> cards) {
         cardsToSend.addAll(cards);
     }
 
-    public void addCard(Card card){
+    public void addCard(Card card) {
         cardsToSend.add(card);
     }
 
-    public void dealTo(ArrayList<Player> players){
+    public void dealTo(List<Player> players) {
         Iterator<Card> iter = cardsToSend.iterator();
-        while(!cardsToSend.isEmpty()){
+        while (!cardsToSend.isEmpty()) {
             for (Player player : players) {
                 Card card = iter.next();
                 player.addCards(card);
                 iter.remove();
-                if(cardsToSend.isEmpty()){
+                if (cardsToSend.isEmpty()) {
                     break;
                 }
             }
         }
         cardsToSend.clear();
     }
-
-
-
 
 }

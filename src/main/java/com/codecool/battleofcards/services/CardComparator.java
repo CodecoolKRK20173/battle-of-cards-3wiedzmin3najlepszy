@@ -25,7 +25,7 @@ public class CardComparator implements Comparator<Card> {
     }
 
     private int getAttributeOf(Card card) {
-        int attrValue;
+        int attrValue = 0;
 
         switch (attributeType) {
         case STRENGTH:

@@ -4,17 +4,17 @@ import com.codecool.battleofcards.dao.CardDAO;
 
 import java.util.*;
 
-
 public class Table {
     private List<Player> players = new ArrayList<Player>();
     private List<Player> playersInRound = new ArrayList<Player>();
     Dealer dealer = new Dealer();
     Deck deck = new Deck();
 
-    public Table(ArrayList<Player> players) {
+    public Table(List<Player> players) {
         this.players = players;
         dealer.addCards(deck.getCards());
         dealer.dealTo(players);
+        playersInRound.addAll(players);
     }
 
     public int compareCards(int atrIndex) {
@@ -79,8 +79,7 @@ public class Table {
         return true;
     }
 
-
-    public void initializeGame(){
+    public void initializeGame() {
         dealer.addCards(deck.getCards());
         dealer.dealTo(players);
     }
