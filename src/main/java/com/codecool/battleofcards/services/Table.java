@@ -12,8 +12,8 @@ public class Table {
 
     public Table(List<Player> players) {
         this.players = players;
-        dealer.addCards(deck.getCards());
-//        dealer.dealTo(players);
+        // dealer.addCards(deck.getCards());
+        // dealer.dealTo(players);
         playersInRound.addAll(players);
     }
 
