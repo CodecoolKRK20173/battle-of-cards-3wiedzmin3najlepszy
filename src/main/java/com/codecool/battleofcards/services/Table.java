@@ -17,7 +17,7 @@ public class Table {
         playersInRound.addAll(players);
     }
 
-    public List<Player> getPlayers(){
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -60,7 +60,7 @@ public class Table {
             playersInRound.addAll(drawers);
         }
 
-        if(!drawers.isEmpty()){
+        if (!drawers.isEmpty()) {
             return 0;
         }
 

@@ -29,7 +29,7 @@ public class TableController {
             for (Player player : table.getPlayers()) {
                 System.out.println(player.getName() + "\'s  size of list is: " + player.getCards().size());
             }
-            playRound();      
+            playRound();
         }
         gameView.printWinningMessage(table.getWinner().getName(), table.getPlayers());
 
@@ -41,21 +41,21 @@ public class TableController {
         int attr = gameView.getAttribute();
         int result = table.compareCards(attr);
         switch (result) {
-        case 1:
-            gameView.printResultMessage(table.getCurrentPlayer().getName() + " wins the round!");
-            break;
+            case 1:
+                gameView.printResultMessage(table.getCurrentPlayer().getName() + " wins the round!");
+                break;
 
-        case 0:
-            List<Player> playersInWar = table.getPlayersInRound();
-            gameView.println("WAR!!!! Players participating: ");
-            for (Player player : playersInWar) {
-                gameView.println(player.getName());
-            }
-            break;
+            case 0:
+                List<Player> playersInWar = table.getPlayersInRound();
+                gameView.println("WAR!!!! Players participating: ");
+                for (Player player : playersInWar) {
+                    gameView.println(player.getName());
+                }
+                break;
 
-        case -1:
-            gameView.println("You lost! Now its " + table.getCurrentPlayer().getName() + "\'s turn.");
-            break;
+            case -1:
+                gameView.println("You lost! Now its " + table.getCurrentPlayer().getName() + "\'s turn.");
+                break;
         }
     }
 
@@ -79,33 +79,33 @@ public class TableController {
             gameView.printMenu();
             int choice = gameView.getNumericInput();
             switch (choice) {
-            case 1:
-                playGame();
-                break;
-            case 2:
-                String name = editorView.getCardName();
-                List<Integer> attributesToAdd = editorView.getAttributesValues(); // zmienic zeby przyjmowalo tylko
-                                                                                  // dodatnie indeksy
-                // cardDAO.addNewCard(name, attributesToAdd);
-                break;
+                case 1:
+                    playGame();
+                    break;
+                case 2:
+                    String name = editorView.getCardName();
+                    List<Integer> attributesToAdd = editorView.getAttributesValues(); // zmienic zeby przyjmowalo tylko
+                    // dodatnie indeksy
+                    // cardDAO.addNewCard(name, attributesToAdd);
+                    break;
 
-            case 3:
-                int cardId = editorView.getCardId();
-                List<Integer> attributesToEdit = editorView.getAttributesValues();
-                // cardDAO.update(name, attributesToEdit);
-                break;
+                case 3:
+                    int cardId = editorView.getCardId();
+                    List<Integer> attributesToEdit = editorView.getAttributesValues();
+                    // cardDAO.update(name, attributesToEdit);
+                    break;
 
-            case 4:
-                int cardIdToDelete = editorView.getCardId();
-                // cardDAO.update(cardIdToDelete);
-                break;
+                case 4:
+                    int cardIdToDelete = editorView.getCardId();
+                    // cardDAO.update(cardIdToDelete);
+                    break;
 
-            case 5:
-                isGameOn = false;
-                break;
+                case 5:
+                    isGameOn = false;
+                    break;
 
-            default:
-                System.out.println("Wrong choice!");
+                default:
+                    System.out.println("Wrong choice!");
             }
         }
     }

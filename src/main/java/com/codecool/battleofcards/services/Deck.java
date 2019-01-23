@@ -1,6 +1,7 @@
 package com.codecool.battleofcards.services;
 
 import com.codecool.battleofcards.dao.CardDAO;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

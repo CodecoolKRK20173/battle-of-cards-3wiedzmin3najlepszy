@@ -47,25 +47,25 @@ public class GameView extends View {
         println(message);
     }
 
-    public int getNumberOfPlayers(){
+    public int getNumberOfPlayers() {
         int minNumberOfPlayers = 2;
         int maxNumberOfPlayers = 4;
         print("Type number of players: ");
         int choice = getNumericInput();
-        while(choice < minNumberOfPlayers || choice > maxNumberOfPlayers){
+        while (choice < minNumberOfPlayers || choice > maxNumberOfPlayers) {
             print("There can be " + minNumberOfPlayers + "-" + maxNumberOfPlayers + " players! Try again: ");
             choice = getNumericInput();
-        }    
+        }
         return choice;
     }
 
-    public void printWinningMessage(String winner, List<Player> players){
+    public void printWinningMessage(String winner, List<Player> players) {
         println(winner + " wins!\n");
         for (Player player : players) {
-             println(player.getName() + " ended with " + player.getCards().size() + " cards.");
+            println(player.getName() + " ended with " + player.getCards().size() + " cards.");
         }
         println("\n");
-        
+
     }
 
 }
