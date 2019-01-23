@@ -2,10 +2,11 @@ package com.codecool.battleofcards.services;
 
 import java.util.ArrayList;
 
-public class Player{
+public class Player {
     String name;
     boolean activePlayer;
     ArrayList<Card> cards;
+
 
     
     public Player(String name){
@@ -16,33 +17,32 @@ public class Player{
         return name;
     }
 
-    public boolean getActivePlayer(){
+    public boolean getActivePlayer() {
         return activePlayer;
     }
 
-    public ArrayList<Card> getCards(){
+    public ArrayList<Card> getCards() {
         return cards;
     }
 
-    public Card getTopCard(){
+    public Card getTopCard() {
         return cards.get(0);
     }
 
-    public void deleteTopCard(){
+    public void deleteTopCard() {
         cards.remove(0);
     }
 
-    public void addCards(ArrayList<Card> cardsToAdd){
+    public void addCards(ArrayList<Card> cardsToAdd) {
         cards.addAll(cardsToAdd);
     }
 
-    public void addCards(Card card){
+    public void addCards(Card card) {
         cards.add(card);
     }
 
-    public void setActivePlayer(){
-        activePlayer = true;
+    public void setActivePlayer(boolean activePlayer) {
+        this.activePlayer = activePlayer;
     }
-
 
 }
