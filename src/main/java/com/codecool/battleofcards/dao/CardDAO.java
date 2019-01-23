@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CardDAO implements ICardDAO {
     private DatabaseConnector databaseConnector;
@@ -65,7 +66,7 @@ public class CardDAO implements ICardDAO {
     }
 
     @Override
-    public void insertNew(String name, int strength, int melee, int magicPower, int dexterity, int intelligence) throws DAOException {
+    public void insertNew(String name, List<Integer> stats) throws DAOException {
         Statement stmt = null;
 
         try {
@@ -74,7 +75,7 @@ public class CardDAO implements ICardDAO {
 
             stmt = databaseConnector.c.createStatement();
             String sql = "INSERT INTO CARDS (ID,NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
-                    "VALUES (" + name + ", " + strength + ", " + melee + ", " + magicPower + ", " + dexterity + ", " + intelligence + ");";
+                    "VALUES (" + name + ", " + stats.get(0) + ", " + stats.get(1) + ", " + stats.get(2) + ", " + stats.get(3) + ", " + stats.get(4) + ");";
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -87,7 +88,7 @@ public class CardDAO implements ICardDAO {
     }
 
     @Override
-    public void update(int id, String name, int strength, int rapidity, int magicPower, int defence, int intelligence) throws DAOException {
+    public void update(int id, String name, List<Integer> stats) throws DAOException {
         Statement stmt = null;
 
         try {
@@ -98,7 +99,11 @@ public class CardDAO implements ICardDAO {
             String sql = "UPDATE CARDS\n" +
                     "SET\n" +
                     " NAME = '" + name + "',\n" +
-                    " STRENGTH =" + String.valueOf(strength) + "\n" +
+                    " STRENGTH =" + String.valueOf(stats.get(0)) + "\n" +
+                    " RAPIDITY =" + String.valueOf(stats.get(1)) + "\n" +
+                    " MAGICPOWER =" + String.valueOf(stats.get(2)) + "\n" +
+                    " DEFENCE =" + String.valueOf(stats.get(3)) + "\n" +
+                    " INTELLIGENCE =" + String.valueOf(stats.get(4)) + "\n" +
                     " WHERE\n" +
                     " ID=" + String.valueOf(id) + ";";
             stmt.executeUpdate(sql);
