@@ -13,11 +13,11 @@ public class Deck {
         // cards = cardDao.getAllCards();
         cards.add(new Card(10, 10, 2, 4, 5, "Rowan"));
         cards.add(new Card(3, 4, 6, 8, 3, "Uhaaaa"));
-        // cards.add(new Card(5, 5, 2, 4, 5, "Aria"));
-        // cards.add(new Card(1, 8, 2, 4, 5, "Mary"));
-        // cards.add(new Card(10, 10, 2, 4, 5, "Hacker"));
-        // cards.add(new Card(10, 10, 2, 4, 5, "Iamtheone"));
-        shuffle();
+        cards.add(new Card(5, 5, 2, 4, 5, "Aria"));
+        cards.add(new Card(1, 8, 2, 4, 5, "Mary"));
+        cards.add(new Card(10, 10, 2, 4, 5, "Hacker"));
+        cards.add(new Card(10, 10, 2, 4, 5, "Iamtheone"));
+        // shuffle();
     }
 
     private void shuffle() {

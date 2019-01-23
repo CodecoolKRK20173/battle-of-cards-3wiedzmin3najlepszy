@@ -21,42 +21,44 @@ public class TableController {
     }
 
     public void playGame() {
-        this.table = new Table(getPlayers(2));
+        int number = gameView.getNumberOfPlayers();
+        this.table = new Table(getPlayers(number));
         table.initializeGame();
+        gameView.clearScreen();
         while (table.checkIfGameOn()) {
-            playRound();
+            for (Player player : table.getPlayers()) {
+                System.out.println(player.getName() + "\'s  size of list is: " + player.getCards().size());
+            }
+            playRound();      
         }
-        gameView.printResultMessage(table.getWinner().getName() + " wins!");
+        gameView.printWinningMessage(table.getWinner().getName(), table.getPlayers());
+
     }
 
     public void playRound() {
         Player activePlayer = table.getCurrentPlayer();
-        System.out.println(activePlayer.getName() + "s" + "turn");
-        gameView.showCard(activePlayer.getTopCard());
+        gameView.showCard(activePlayer.getTopCard(), activePlayer.getName());
         int attr = gameView.getAttribute();
         int result = table.compareCards(attr);
         switch (result) {
         case 1:
-            gameView.printResultMessage(table.getCurrentPlayer() + " wins the round");
+            gameView.printResultMessage(table.getCurrentPlayer().getName() + " wins the round!");
             break;
 
         case 0:
-            List<Player> players = table.getPlayersInRound();
-            gameView.printResultMessage("WAR!!!! Players: ");
-            for (Player player : players) {
-                gameView.printResultMessage(player.getName());
+            List<Player> playersInWar = table.getPlayersInRound();
+            gameView.println("WAR!!!! Players participating: ");
+            for (Player player : playersInWar) {
+                gameView.println(player.getName());
             }
             break;
 
         case -1:
-            gameView.print("You lost! Now its " + table.getCurrentPlayer().getName() + "s turn.");
+            gameView.println("You lost! Now its " + table.getCurrentPlayer().getName() + "\'s turn.");
             break;
         }
     }
 
-    public void initializeGame() {
-
-    }
 
     public List<Player> getPlayers(int number) {
         List<Player> players = new ArrayList<>();
@@ -69,7 +71,9 @@ public class TableController {
         return players;
     }
 
+
     public void run() {
+        gameView.clearScreen();
         boolean isGameOn = true;
         while (isGameOn) {
             gameView.printMenu();

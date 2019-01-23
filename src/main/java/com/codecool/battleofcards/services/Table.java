@@ -5,7 +5,7 @@ import com.codecool.battleofcards.dao.CardDAO;
 import java.util.*;
 
 public class Table {
-    private List<Player> players = new ArrayList<Player>();
+    public List<Player> players = new ArrayList<Player>();
     private List<Player> playersInRound = new ArrayList<Player>();
     Dealer dealer = new Dealer();
     Deck deck = new Deck();
@@ -15,6 +15,10 @@ public class Table {
         // dealer.addCards(deck.getCards());
         // dealer.dealTo(players);
         playersInRound.addAll(players);
+    }
+
+    public List<Player> getPlayers(){
+        return players;
     }
 
     public int compareCards(int atrIndex) {
@@ -54,6 +58,10 @@ public class Table {
         } else {
             playersInRound.clear();
             playersInRound.addAll(drawers);
+        }
+
+        if(!drawers.isEmpty()){
+            return 0;
         }
 
         return result;
