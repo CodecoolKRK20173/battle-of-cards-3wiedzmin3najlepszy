@@ -65,7 +65,7 @@ public class CardDAO implements ICardDAO {
     }
 
     @Override
-    public void insertNew(String name, int strength, int rapidity, int magicPower, int defence, int intelligence) throws DAOException {
+    public void insertNew(String name, int strength, int melee, int magicPower, int dexterity, int intelligence) throws DAOException {
         Statement stmt = null;
 
         try {
@@ -73,8 +73,8 @@ public class CardDAO implements ICardDAO {
             databaseConnector.c.setAutoCommit(false);
 
             stmt = databaseConnector.c.createStatement();
-            String sql = "INSERT INTO CARDS (ID,NAME,AGE,ADDRESS,SALARY) " +
-                    "VALUES (" + name + ", " + strength + ", " + rapidity + ", " + magicPower + ", " + defence + ", " + intelligence + ");";
+            String sql = "INSERT INTO CARDS (ID,NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
+                    "VALUES (" + name + ", " + strength + ", " + melee + ", " + magicPower + ", " + dexterity + ", " + intelligence + ");";
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -150,11 +150,11 @@ public class CardDAO implements ICardDAO {
             while (rs.next()) {
                 String name = rs.getString("name");
                 int strength = rs.getInt("strength");
-                int rapidity = rs.getInt("rapidity");
-                int magicPower = rs.getInt("magicpower");
-                int defence = rs.getInt("defence");
+                int melee = rs.getInt("rapidity");
+                int magic = rs.getInt("magicpower");
+                int dexterity = rs.getInt("defence");
                 int intelligence = rs.getInt("intelligence");
-                cardsList.add(new Card(strength, rapidity, magicPower, defence, intelligence, name));
+                cardsList.add(new Card(strength, melee, magic, dexterity, intelligence, name));
             }
 
             rs.close();
@@ -182,12 +182,12 @@ public class CardDAO implements ICardDAO {
 
             String name = rs.getString("name");
             int strength = rs.getInt("strength");
-            int rapidity = rs.getInt("rapidity");
-            int magicPower = rs.getInt("magicpower");
-            int defence = rs.getInt("defence");
+            int melee = rs.getInt("rapidity");
+            int magic = rs.getInt("magicpower");
+            int dexterity = rs.getInt("defence");
             int intelligence = rs.getInt("intelligence");
 
-            card = new Card(strength, rapidity, magicPower, defence, intelligence, name);
+            card = new Card(strength, melee, magic, dexterity, intelligence, name);
 
             rs.close();
             stmt.close();
