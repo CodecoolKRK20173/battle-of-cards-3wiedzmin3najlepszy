@@ -154,7 +154,7 @@ public class CardDAO implements ICardDAO {
                 int magicPower = rs.getInt("magicpower");
                 int defence = rs.getInt("defence");
                 int intelligence = rs.getInt("intelligence");
-                cardsList.add(new Card(name, strength, rapidity, magicPower, defence, intelligence));
+                cardsList.add(new Card(strength, rapidity, magicPower, defence, intelligence, name));
             }
 
             rs.close();
@@ -187,14 +187,13 @@ public class CardDAO implements ICardDAO {
             int defence = rs.getInt("defence");
             int intelligence = rs.getInt("intelligence");
 
-            card = new Card(name, strength, rapidity, magicPower, defence, intelligence);
+            card = new Card(strength, rapidity, magicPower, defence, intelligence, name);
 
             rs.close();
             stmt.close();
             databaseConnector.c.close();
         } catch (Exception e) {
             throw new DAOException("Exception occured during geting existing card by ID");
-            return null;
         }
         System.out.println("Operation done successfully");
 
