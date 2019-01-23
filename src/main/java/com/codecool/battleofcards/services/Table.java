@@ -77,4 +77,14 @@ public class Table {
         return true;
     }
 
+    public Player getWinner() {
+        Player winner = getCurrentPlayer();
+        for (Player player : players) {
+            if (player.getCards().size() > winner.getCards().size()) {
+                winner = player;
+            }
+        }
+        return winner;
+    }
+
 }
