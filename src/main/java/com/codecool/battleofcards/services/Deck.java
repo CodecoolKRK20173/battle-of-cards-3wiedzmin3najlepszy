@@ -9,12 +9,13 @@ public class Deck{
 
 
     public Deck(){
-        CardDAO cardDao = new CardDAO();
+        CardDAO cardDao = CardDAO.getInstance();
         cards = cardDao.getAllCards();
+        shuffle();
     }
 
 
-    public void shuffle(){
+    private void shuffle(){
         Collections.shuffle(cards);
     }
 

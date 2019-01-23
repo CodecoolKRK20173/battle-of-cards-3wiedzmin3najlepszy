@@ -7,7 +7,13 @@ public class Player {
     boolean activePlayer;
     ArrayList<Card> cards;
 
-    public String getName() {
+
+    
+    public Player(String name){
+        this.name = name;
+    }
+    
+    public String getName(){
         return name;
     }
 

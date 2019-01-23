@@ -4,6 +4,7 @@ import com.codecool.battleofcards.dao.CardDAO;
 
 import java.util.*;
 
+
 public class Table {
     private List<Player> players = new ArrayList<Player>();
     private List<Player> playersInRound = new ArrayList<Player>();
@@ -78,6 +79,12 @@ public class Table {
         return true;
     }
 
+
+    public void initializeGame(){
+        dealer.addCards(deck.getCards());
+        dealer.dealTo(players);
+    }
+
     public Player getWinner() {
         Player winner = getCurrentPlayer();
         for (Player player : players) {
@@ -86,6 +93,7 @@ public class Table {
             }
         }
         return winner;
+
     }
 
 }
