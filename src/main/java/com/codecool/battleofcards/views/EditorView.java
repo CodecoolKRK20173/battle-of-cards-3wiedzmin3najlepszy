@@ -18,8 +18,8 @@ public class EditorView extends View {
     }
 
     public String getCardName() {
-        println("Enter card name: ");
         clearScreen();
+        println("Enter card name: ");
         return scanner.nextLine();
     }
 
