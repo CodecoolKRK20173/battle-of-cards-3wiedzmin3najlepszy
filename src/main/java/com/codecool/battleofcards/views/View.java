@@ -21,6 +21,7 @@ abstract class View {
         }
         int number = scanner.nextInt();
         scanner.nextLine();
+        clearScreen();
         return number;
     }
 

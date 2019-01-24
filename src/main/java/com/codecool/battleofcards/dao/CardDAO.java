@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CardDAO implements ICardDAO {
     private DatabaseConnector databaseConnector;
-    EditorView view = new EditorView();
+    private EditorView view = new EditorView();
 
     public CardDAO() {
         this.databaseConnector = DatabaseConnector.getInstance();
@@ -100,13 +100,13 @@ public class CardDAO implements ICardDAO {
             stmt = databaseConnector.c.createStatement();
             String sql = "UPDATE CARDS\n" +
                     "SET\n" +
-                    " STRENGTH =" + String.valueOf(stats.get(0)) + ",\n" +
-                    " RAPIDITY =" + String.valueOf(stats.get(1)) + ",\n" +
-                    " MAGICPOWER =" + String.valueOf(stats.get(2)) + ",\n" +
-                    " DEFENCE =" + String.valueOf(stats.get(3)) + ",\n" +
-                    " INTELLIGENCE =" + String.valueOf(stats.get(4)) + "\n" +
+                    " STRENGTH =" + stats.get(0) + ",\n" +
+                    " RAPIDITY =" + stats.get(1) + ",\n" +
+                    " MAGICPOWER =" + stats.get(2) + ",\n" +
+                    " DEFENCE =" + stats.get(3) + ",\n" +
+                    " INTELLIGENCE =" + stats.get(4) + "\n" +
                     " WHERE\n" +
-                    " ID=" + String.valueOf(id) + ";";
+                    " ID=" + id + ";";
             stmt.executeUpdate(sql);
             databaseConnector.c.commit();
 
@@ -170,8 +170,6 @@ public class CardDAO implements ICardDAO {
         } catch (SQLException e) {
             throw new DAOException("Exception occured during geting all existing cards in database");
         }
-        view.println("Operation done successfully");
-
         return cardsList;
     }
 

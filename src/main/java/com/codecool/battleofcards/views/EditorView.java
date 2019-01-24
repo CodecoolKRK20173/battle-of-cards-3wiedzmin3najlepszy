@@ -19,6 +19,7 @@ public class EditorView extends View {
 
     public String getCardName() {
         println("Enter card name: ");
+        clearScreen();
         return scanner.nextLine();
     }
 
@@ -39,13 +40,16 @@ public class EditorView extends View {
             value = scanner.nextLine();
         }
         if (value.matches("^[1-9]+$")) {
+            clearScreen();
             return value;
         } else {
+            clearScreen();
             return "-1";
         }
     }
 
     public void printListOfCards(List<Card> cards) {
+        System.out.println("List of cards:\n");
         for (int i = 0; i < cards.size(); i++) {
             Card card = cards.get(i);
             println((i + 1) + ". " + card.getName());
@@ -53,7 +57,7 @@ public class EditorView extends View {
     }
 
     public int getCardId() {
-        println("Enter card Id: ");
+        println("\nEnter card Id: ");
         return getNumericInput();
     }
 
