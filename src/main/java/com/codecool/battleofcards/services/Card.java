@@ -1,5 +1,9 @@
 package com.codecool.battleofcards.services;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Card {
     int id;
     int melee;
@@ -70,6 +74,10 @@ public class Card {
 
     public void setStrength(int value) {
         strength = value;
+    }
+
+    public List<Integer> getAttributeList() {
+        return new ArrayList<>(Arrays.asList(getStrength(), getMelee(), getMagic(), getDexterity(), getIntelligence()));
     }
 
 
