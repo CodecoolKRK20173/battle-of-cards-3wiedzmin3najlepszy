@@ -10,7 +10,7 @@ public interface ICardDAO {
 
     void insertNew(String name, List<Integer> stats) throws DAOException;
 
-    void update(int id, String name, List<Integer> stats) throws DAOException;
+    void update(int id, List<Integer> stats) throws DAOException;
 
     void delete(int id) throws DAOException;
 

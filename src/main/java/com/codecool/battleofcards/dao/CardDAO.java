@@ -51,8 +51,8 @@ public class CardDAO implements ICardDAO {
             databaseConnector.c.setAutoCommit(false);
 
             stmt = databaseConnector.c.createStatement();
-            String sql = "INSERT INTO CARDS (ID,NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
-                    "VALUES (1, 'SampleName', 10, 10, 10, 10, 10);";
+            String sql = "INSERT INTO CARDS (NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
+                    "VALUES ('SampleName', 10, 10, 10, 10, 10);";
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -88,7 +88,7 @@ public class CardDAO implements ICardDAO {
     }
 
     @Override
-    public void update(int id, String name, List<Integer> stats) throws DAOException {
+    public void update(int id, List<Integer> stats) throws DAOException {
         Statement stmt = null;
 
         try {
@@ -98,11 +98,10 @@ public class CardDAO implements ICardDAO {
             stmt = databaseConnector.c.createStatement();
             String sql = "UPDATE CARDS\n" +
                     "SET\n" +
-                    " NAME = '" + name + "',\n" +
-                    " STRENGTH =" + String.valueOf(stats.get(0)) + "\n" +
-                    " RAPIDITY =" + String.valueOf(stats.get(1)) + "\n" +
-                    " MAGICPOWER =" + String.valueOf(stats.get(2)) + "\n" +
-                    " DEFENCE =" + String.valueOf(stats.get(3)) + "\n" +
+                    " STRENGTH =" + String.valueOf(stats.get(0)) + ",\n" +
+                    " RAPIDITY =" + String.valueOf(stats.get(1)) + ",\n" +
+                    " MAGICPOWER =" + String.valueOf(stats.get(2)) + ",\n" +
+                    " DEFENCE =" + String.valueOf(stats.get(3)) + ",\n" +
                     " INTELLIGENCE =" + String.valueOf(stats.get(4)) + "\n" +
                     " WHERE\n" +
                     " ID=" + String.valueOf(id) + ";";

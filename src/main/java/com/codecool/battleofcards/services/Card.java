@@ -1,6 +1,7 @@
 package com.codecool.battleofcards.services;
 
 public class Card {
+    int id;
     int melee;
     int magic;
     int dexterity;
@@ -9,7 +10,7 @@ public class Card {
     String name;
 
 
-    public Card(int strength, int melee, int magic, int dexterity, int intelligence, String name) {
+    public Card(int strength, int melee, int magic, int dexterity, int intelligence, String name, int id) {
         this.strength = strength;
         this.melee = melee;
         this.magic = magic;
@@ -18,6 +19,9 @@ public class Card {
         this.name = name;
     }
 
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
