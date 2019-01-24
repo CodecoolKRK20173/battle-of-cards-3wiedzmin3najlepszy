@@ -17,6 +17,7 @@ public class TableController {
     private CardDAO cardDAO;
     private DAOInputService daoInputService;
 
+
     public TableController() {
         this.gameView = new GameView();
         this.editorView = new EditorView();
@@ -60,11 +61,8 @@ public class TableController {
         Player activePlayer = table.getCurrentPlayer();
         gameView.showCard(activePlayer.getTopCard(), activePlayer.getName());
         int attr = gameView.getAttribute();
-        gameView.showPlayersTopCards(table.getPlayersInRound());
+        gameView.showPlayersTopCards(table.getPlayersInRound(), attr);
         int result = table.compareCards(attr);
-
-
-
 
         switch (result) {
             case 1:
@@ -73,16 +71,17 @@ public class TableController {
 
             case 0:
                 List<Player> playersInWar = table.getPlayersInRound();
-                gameView.println("WAR!!!! Players participating: ");
+                gameView.printResultMessage("WAR!!!! Players participating: ");
                 for (Player player : playersInWar) {
                     gameView.println(player.getName());
                 }
                 break;
 
             case -1:
-                gameView.println("You lost! Now its " + table.getCurrentPlayer().getName() + "\'s turn.");
+                gameView.printResultMessage("You lost! Now its " + table.getCurrentPlayer().getName() + "\'s turn.");
                 break;
         }
+        gameView.getEmptyInput();
 
     }
 

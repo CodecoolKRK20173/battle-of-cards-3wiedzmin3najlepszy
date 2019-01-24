@@ -28,7 +28,7 @@ public class GameView extends View {
                 + card.getIntelligence() + "\n" + defaultColor);
     }
 
-    public void showPlayersTopCards(List<Player> players){
+    public void showPlayersTopCards(List<Player> players, int attribute){
         int numberOfRows = 7;
         final Object[][] table = new Object[numberOfRows][];
         List<String> names = new ArrayList<>();
@@ -38,58 +38,46 @@ public class GameView extends View {
         List<String> magics = new ArrayList<>();
         List<String> dexterities = new ArrayList<>();
         List<String> intelligences = new ArrayList<>();
-
-
-
-        // StringBuilder names = new StringBuilder();
-        // StringBuilder cardNames = new StringBuilder();
-        // StringBuilder strengths = new StringBuilder();
-        // StringBuilder melees = new StringBuilder();
-        // StringBuilder magics = new StringBuilder();
-        // StringBuilder dexterities = new StringBuilder();
-        // StringBuilder intelligences = new StringBuilder();
-            
+       
         for (Player player : players) {
             if (player.getCards().isEmpty()){
                 continue;
             }
                 Card card = player.getTopCard();
-                // names.append(String.format("%10s", "Name: " + player.getName() + "   "));
-                // cardNames.append(String.format("%10s", "Name of card: " +card.getName() + "   "));
-                // strengths.append("Strength: " + card.getStrength() + "   ");
-                // melees.append("Melee: " + card.getMelee() + "   ");
-                // magics.append("Magic: " + card.getMagic() + "   ");
-                // dexterities.append("Dexterity: " + card.getDexterity() + "   ");
-                // intelligences.append("Intelligence: " + card.getIntelligence() + "   "); 
-
-                names.add(player.getName());
-                cardNames.add(card.getName());
-                strengths.add(Integer.toString(card.getStrength()));
-                melees.add(Integer.toString(card.getMelee()));
-                magics.add(Integer.toString(card.getMagic()));
-                dexterities.add(Integer.toString(card.getDexterity()));
-                intelligences.add(Integer.toString(card.getIntelligence()));
+                names.add("Name: " + player.getName());
+                cardNames.add("Card name: " + card.getName());
+                strengths.add("Strength: " + Integer.toString(card.getStrength()));
+                melees.add("Melee: " + Integer.toString(card.getMelee()));
+                magics.add("Magic: " + Integer.toString(card.getMagic()));
+                dexterities.add("Dexterity: " + Integer.toString(card.getDexterity()));
+                intelligences.add("Intelligence: " + Integer.toString(card.getIntelligence()));
             }
 
-        table[0] = names.toArray();
-        table[1] = cardNames.toArray();
-        table[2] = strengths.toArray();
-        table[3] = melees.toArray();
-        table[4] = magics.toArray();
-        table[5] = dexterities.toArray();
-        table[6] = intelligences.toArray();
+            table[0] = names.toArray();
+            table[1] = cardNames.toArray();
+            table[2] = strengths.toArray();
+            table[3] = melees.toArray();
+            table[4] = magics.toArray();
+            table[5] = dexterities.toArray();
+            table[6] = intelligences.toArray();
 
-        
-        for (final Object[] row : table) {
-            for (Object str : row) {
-                // System.out.print((String) str);
-                System.out.format("%15s", str);
+            println("\nThese are cards of all players in this round:\n");
+            int numberOfIteration = 0;
+
+            for (final Object[] row : table) {
+                for (Object str : row) {
+                    if(attribute+1 == numberOfIteration){
+                        System.out.format(purple + "%-30s" + defaultColor, str);
+                    }
+                    else{
+                        System.out.format("%-30s", str); 
+                    }
+                }
+                numberOfIteration++;
+                System.out.println();
             }
-            System.out.println();
-            // System.out.format("%15s%15s%15s%15s%15s%15s%15s\n", row);
         }
 
-    }
 
     public int getAttribute() {
         print("Enter attribute number: ");
@@ -98,7 +86,6 @@ public class GameView extends View {
             println("Number must be in range 1-5");
             attrNumber = getNumericInput();
         }
-        clearScreen();
         return attrNumber;
     }
 

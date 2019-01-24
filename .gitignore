@@ -37,4 +37,5 @@ hs_err_pid*
 /target
 .vscode
 test.db
+.pdf
 
