@@ -102,5 +102,30 @@ public class Table {
         return winner;
 
     }
+    public boolean gameDraw(){
+        Player winner = getWinner();
+        int i = 0;
+        for (Player player : players) {
+            if(player.getCards().size() == winner.getCards().size())
+                i += 1;
+                if(i > 1)
+                    return true;
+        }
 
+        return false;
+    }
+
+    public List<Player> handleGameDraw(){
+        List<Player> winners = new ArrayList<>();
+        Player winner = getWinner();
+        winners.add(winner);
+
+        for (Player player : players) {
+            if(player.getCards().size() == winner.getCards().size())
+                if (player != winner)
+                    winners.add(player);
+        }
+
+        return winners;
+    }
 }

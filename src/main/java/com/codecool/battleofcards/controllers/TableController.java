@@ -23,6 +23,7 @@ public class TableController {
     public void playGame() {
         int number = gameView.getNumberOfPlayers();
         this.table = new Table(getPlayers(number));
+        List<Player> winners = new ArrayList<>();
         table.initializeGame();
         gameView.clearScreen();
         while (table.checkIfGameOn()) {
@@ -31,7 +32,22 @@ public class TableController {
             }
             playRound();
         }
-        gameView.printWinningMessage(table.getWinner().getName(), table.getPlayers());
+
+        if (!table.gameDraw()) {
+            gameView.printWinningMessage(table.getWinner().getName(), table.getPlayers());
+        }
+        else{
+            winners = table.handleGameDraw();
+            String sWinners = "";
+            for (int i = 0; i < winners.size(); i++){
+                Player winner = winners.get(i);
+                sWinners += winner.getName();
+                if (i != winners.size() - 1)
+                    sWinners += " and ";
+
+            }
+            gameView.printWinningMessage(sWinners, table.getPlayers());
+        }
 
     }
 
