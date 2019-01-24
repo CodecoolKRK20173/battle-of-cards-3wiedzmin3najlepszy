@@ -14,11 +14,13 @@ public class TableController {
     private GameView gameView;
     private EditorView editorView;
     private CardDAO cardDAO;
+    private DAOInputService daoInputService;
 
     public TableController() {
         this.gameView = new GameView();
         this.editorView = new EditorView();
         this.cardDAO = new CardDAO();
+        this.daoInputService = new DAOInputService(cardDAO);
     }
 
     public void playGame() {
@@ -83,23 +85,21 @@ public class TableController {
                     break;
                 case 2:
                     String name = editorView.getCardName();
-                    List<Integer> attributesToAdd = editorView.getAttributesValues(); // zmienic zeby przyjmowalo tylko
-                    // dodatnie indeksy
-                    try {
-                        cardDAO.insertNew(name, attributesToAdd);
-                    } catch (DAOException e) {
-                        e.printStackTrace();
-                    }
-
+                    List<Integer> attributesToAdd = editorView.getAttributesValues();
+                    daoInputService.addNewCard(name, attributesToAdd);
                     break;
 
                 case 3:
                     try {
                         editorView.printListOfCards(cardDAO.getAllCards());
                         int cardId = editorView.getCardId();
-                        int dbCardId = cardDAO.getAllCards().get(cardId - 1).getId();
-                        List<Integer> attributesToEdit = editorView.getAttributesValues();
-                        cardDAO.update(dbCardId, attributesToEdit);
+                        if (cardId > cardDAO.getAllCards().size() || cardId < 1) {
+                            editorView.println("Wrong card index");        
+                        } else {
+                            int dbCardId = cardDAO.getAllCards().get(cardId - 1).getId();
+                            List<Integer> attributesToEdit = editorView.getAttributesValues();
+                            daoInputService.editCard(dbCardId, attributesToEdit);
+                        }
                     } catch (DAOException e) {
                         e.printStackTrace();
                     }
@@ -110,8 +110,12 @@ public class TableController {
                     try {
                         editorView.printListOfCards(cardDAO.getAllCards());
                         int cardIdToDelete = editorView.getCardId();
-                        int dbCardId = cardDAO.getAllCards().get(cardIdToDelete - 1).getId();
-                        cardDAO.delete(dbCardId);
+                        if (cardIdToDelete > cardDAO.getAllCards().size() || cardIdToDelete < 1) {
+                            editorView.println("Wrong card index");        
+                        } else {
+                            int dbCardId = cardDAO.getAllCards().get(cardIdToDelete - 1).getId();
+                            cardDAO.delete(dbCardId);
+                        }
                     } catch (DAOException e) {
                         e.printStackTrace();
                     }
