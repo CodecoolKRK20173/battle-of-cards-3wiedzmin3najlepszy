@@ -5,7 +5,7 @@ import com.codecool.battleofcards.dao.CardDAO;
 import java.util.*;
 
 public class Table {
-    public List<Player> players = new ArrayList<Player>();
+    private List<Player> players = new ArrayList<Player>();
     private List<Player> playersInRound = new ArrayList<Player>();
     Dealer dealer = new Dealer();
     Deck deck = new Deck();
