@@ -5,13 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Card {
-    int id;
-    int melee;
-    int magic;
-    int dexterity;
-    int intelligence;
-    int strength;
-    String name;
+    private int id;
+    private int melee;
+    private int magic;
+    private int dexterity;
+    private int intelligence;
+    private int strength;
+    private String name;
 
 
     public Card(int strength, int melee, int magic, int dexterity, int intelligence, String name, int id) {
