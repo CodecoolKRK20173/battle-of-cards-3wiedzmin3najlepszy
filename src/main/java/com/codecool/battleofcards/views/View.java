@@ -30,15 +30,15 @@ abstract class View {
         System.out.flush();
     }
 
-    public String getEmptyInput(){
+    public String getEmptyInput() {
         println("Press enter to continue: ");
         String input = scanner.nextLine();
-        if (input.isEmpty()){
+        if (input.isEmpty()) {
             clearScreen();
             return "-1";
         }
         clearScreen();
         return "-1";
-       
+
     }
 }

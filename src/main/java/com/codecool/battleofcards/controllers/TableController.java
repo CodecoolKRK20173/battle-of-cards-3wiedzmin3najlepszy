@@ -27,7 +27,7 @@ public class TableController {
         defaultDeck.populateDatabase(daoInputService);
     }
 
-    public void playGame() {
+    private void playGame() {
         int number = gameView.getNumberOfPlayers();
         this.table = new Table(getPlayers(number));
         List<Player> winners = new ArrayList<>();
@@ -57,7 +57,7 @@ public class TableController {
 
     }
 
-    public void playRound() {
+    private void playRound() {
         Player activePlayer = table.getCurrentPlayer();
         gameView.showCard(activePlayer.getTopCard(), activePlayer.getName());
         int attr = gameView.getAttribute();
@@ -85,7 +85,7 @@ public class TableController {
 
     }
 
-    public List<Player> getPlayers(int number) {
+    private List<Player> getPlayers(int number) {
         List<Player> players = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             String name = gameView.getUserName();

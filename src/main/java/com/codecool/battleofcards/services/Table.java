@@ -1,7 +1,5 @@
 package com.codecool.battleofcards.services;
 
-import com.codecool.battleofcards.dao.CardDAO;
-
 import java.util.*;
 
 public class Table {
@@ -102,26 +100,27 @@ public class Table {
         return winner;
 
     }
-    public boolean gameDraw(){
+
+    public boolean gameDraw() {
         Player winner = getWinner();
         int i = 0;
         for (Player player : players) {
-            if(player.getCards().size() == winner.getCards().size())
+            if (player.getCards().size() == winner.getCards().size())
                 i += 1;
-                if(i > 1)
-                    return true;
+            if (i > 1)
+                return true;
         }
 
         return false;
     }
 
-    public List<Player> handleGameDraw(){
+    public List<Player> handleGameDraw() {
         List<Player> winners = new ArrayList<>();
         Player winner = getWinner();
         winners.add(winner);
 
         for (Player player : players) {
-            if(player.getCards().size() == winner.getCards().size())
+            if (player.getCards().size() == winner.getCards().size())
                 if (player != winner)
                     winners.add(player);
         }

@@ -7,7 +7,7 @@ import com.codecool.battleofcards.dao.DAOException;
 
 public class DAOInputService {
     private CardDAO cardDAO;
-    
+
     public DAOInputService(CardDAO cardDAO) {
         this.cardDAO = cardDAO;
     }
@@ -45,5 +45,5 @@ public class DAOInputService {
             e.printStackTrace();
         }
     }
-    
+
 }
