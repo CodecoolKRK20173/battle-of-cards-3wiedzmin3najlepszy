@@ -24,8 +24,8 @@ public class CardDAO implements ICardDAO {
         try {
             databaseConnector.connectToDatabase();
             stmt = databaseConnector.c.createStatement();
-            String sql = "CREATE TABLE CARDS " +
-                    "(ID INT PRIMARY KEY     NOT NULL," +
+            String sql = "CREATE TABLE IF NOT EXISTS CARDS " +
+                    "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     " NAME           TEXT    NOT NULL, " +
                     " STRENGTH       INT     NOT NULL, " +
                     " RAPIDITY       INT     NOT NULL, " +
@@ -74,8 +74,8 @@ public class CardDAO implements ICardDAO {
             databaseConnector.c.setAutoCommit(false);
 
             stmt = databaseConnector.c.createStatement();
-            String sql = "INSERT INTO CARDS (ID,NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
-                    "VALUES (" + name + ", " + stats.get(0) + ", " + stats.get(1) + ", " + stats.get(2) + ", " + stats.get(3) + ", " + stats.get(4) + ");";
+            String sql = "INSERT INTO CARDS (NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
+                    "VALUES ('" + name + "', " + stats.get(0) + ", " + stats.get(1) + ", " + stats.get(2) + ", " + stats.get(3) + ", " + stats.get(4) + ");";
             stmt.executeUpdate(sql);
 
             stmt.close();
