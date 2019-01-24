@@ -8,6 +8,10 @@ import com.codecool.battleofcards.services.Player;
 
 public class GameView extends View {
 
+    private static final String green = "\u001B[32m";
+    private static final String purple = "\u001B[34m";
+    private static final String defaultColor = "\033[0m";
+
     public String getUserName() {
         print("Enter user Name: ");
         String userName = scanner.nextLine();
@@ -15,11 +19,11 @@ public class GameView extends View {
     }
 
     public void showCard(Card card, String name) {
-        println(name + "\'s" + " turn\n");
-        println("Your card: " + card.getName());
-        println("Statistics: \n\n" + "(1) Strength: " + card.getStrength() + "\n" + "(2) Melee: " + card.getMelee() + "\n"
+        println(purple + "\n" + name + "\'s" + " turn\n" + defaultColor);
+        println(green + "Your card: " + card.getName());
+        println(green + "Statistics: \n\n" + "(1) Strength: " + card.getStrength() + "\n" + "(2) Melee: " + card.getMelee() + "\n"
                 + "(3) Magic: " + card.getMagic() + "\n" + "(4) Dexterity: " + card.getDexterity() + "\n" + "(5) Intelligence: "
-                + card.getIntelligence() + "\n");
+                + card.getIntelligence() + "\n" + defaultColor);
     }
 
     public int getAttribute() {
@@ -44,7 +48,7 @@ public class GameView extends View {
     }
 
     public void printResultMessage(String message) {
-        println(message);
+        println(purple + "\n" + message + "\n" + defaultColor);
     }
 
     public int getNumberOfPlayers() {
@@ -60,9 +64,14 @@ public class GameView extends View {
     }
 
     public void printWinningMessage(String winner, List<Player> players) {
-        println(winner + " wins!\n");
+        println(purple + winner + " wins!\n");
+        for (Player player : players){
+            if(player.getCards().size()==0){
+                println(purple + player.getName() + " has run out of cards!");
+            }
+        }
         for (Player player : players) {
-            println(player.getName() + " ended with " + player.getCards().size() + " cards.");
+            println(defaultColor + player.getName() + " ended with " + player.getCards().size() + " cards.");
         }
         println("\n");
 
