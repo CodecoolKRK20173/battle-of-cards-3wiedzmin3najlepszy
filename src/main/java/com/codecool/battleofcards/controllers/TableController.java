@@ -28,7 +28,7 @@ public class TableController {
         gameView.clearScreen();
         while (table.checkIfGameOn()) {
             for (Player player : table.getPlayers()) {
-                System.out.println(player.getName() + "\'s  size of list is: " + player.getCards().size());
+                System.out.println(player.getName() + "\'s  remaining cards: " + player.getCards().size());
             }
             playRound();
         }
