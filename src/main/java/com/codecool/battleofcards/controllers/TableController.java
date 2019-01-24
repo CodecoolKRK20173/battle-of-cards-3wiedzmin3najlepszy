@@ -22,6 +22,8 @@ public class TableController {
         this.editorView = new EditorView();
         this.cardDAO = new CardDAO();
         this.daoInputService = new DAOInputService(cardDAO);
+        DefaultDeck defaultDeck = new DefaultDeck();
+        defaultDeck.populateDatabase(daoInputService);
     }
 
     public void playGame() {

@@ -17,7 +17,7 @@ public class CardDAO implements ICardDAO {
         this.databaseConnector = DatabaseConnector.getInstance();
         databaseConnector.connectToDatabase();
         createSampleTable();
-        insertSampleToTable();
+        // insertSampleToTable();
     }
 
     private void createSampleTable() {
