@@ -1,6 +1,7 @@
 package com.codecool.battleofcards.dao;
 
 import com.codecool.battleofcards.services.Card;
+import com.codecool.battleofcards.views.EditorView;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class CardDAO implements ICardDAO {
     private DatabaseConnector databaseConnector;
+    EditorView view = new EditorView();
 
     public CardDAO() {
         this.databaseConnector = DatabaseConnector.getInstance();
@@ -40,7 +42,7 @@ public class CardDAO implements ICardDAO {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Table created successfully");
+        view.println("Table created successfully");
     }
 
     private void insertSampleToTable() {
@@ -62,7 +64,7 @@ public class CardDAO implements ICardDAO {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Insert successfully");
+        view.println("Insert successfully");
     }
 
     @Override
@@ -84,7 +86,7 @@ public class CardDAO implements ICardDAO {
         } catch (SQLException e) {
             throw new DAOException("Exception occured during inserting new card to database");
         }
-        System.out.println("Records created successfully");
+        view.println("Records created successfully");
     }
 
     @Override
@@ -115,7 +117,7 @@ public class CardDAO implements ICardDAO {
         } catch (Exception e) {
             throw new DAOException("Exception occured during updating existing card in database");
         }
-        System.out.println("Updated successfully");
+        view.println("Updated successfully");
     }
 
     @Override
@@ -136,7 +138,7 @@ public class CardDAO implements ICardDAO {
         } catch (Exception e) {
             throw new DAOException("Exception occured during deletion existing card in database");
         }
-        System.out.println("Deleted successfully");
+        view.println("Deleted successfully");
     }
 
     @Override
@@ -158,7 +160,8 @@ public class CardDAO implements ICardDAO {
                 int magic = rs.getInt("magicpower");
                 int dexterity = rs.getInt("defence");
                 int intelligence = rs.getInt("intelligence");
-                cardsList.add(new Card(strength, melee, magic, dexterity, intelligence, name));
+                int cardId = rs.getInt("id");
+                cardsList.add(new Card(strength, melee, magic, dexterity, intelligence, name, cardId));
             }
 
             rs.close();
@@ -167,7 +170,7 @@ public class CardDAO implements ICardDAO {
         } catch (SQLException e) {
             throw new DAOException("Exception occured during geting all existing cards in database");
         }
-        System.out.println("Operation done successfully");
+        view.println("Operation done successfully");
 
         return cardsList;
     }
@@ -190,8 +193,9 @@ public class CardDAO implements ICardDAO {
             int magic = rs.getInt("magicpower");
             int dexterity = rs.getInt("defence");
             int intelligence = rs.getInt("intelligence");
+            int cardId = rs.getInt("id");
 
-            card = new Card(strength, melee, magic, dexterity, intelligence, name);
+            card = new Card(strength, melee, magic, dexterity, intelligence, name, cardId);
 
             rs.close();
             stmt.close();
@@ -199,7 +203,7 @@ public class CardDAO implements ICardDAO {
         } catch (Exception e) {
             throw new DAOException("Exception occured during geting existing card by ID");
         }
-        System.out.println("Operation done successfully");
+        view.println("Operation done successfully");
 
         return card;
     }

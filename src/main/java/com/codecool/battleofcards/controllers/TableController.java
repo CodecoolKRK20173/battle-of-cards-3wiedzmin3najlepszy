@@ -42,21 +42,21 @@ public class TableController {
         int attr = gameView.getAttribute();
         int result = table.compareCards(attr);
         switch (result) {
-        case 1:
-            gameView.printResultMessage(table.getCurrentPlayer().getName() + " wins the round!");
-            break;
+            case 1:
+                gameView.printResultMessage(table.getCurrentPlayer().getName() + " wins the round!");
+                break;
 
-        case 0:
-            List<Player> playersInWar = table.getPlayersInRound();
-            gameView.println("WAR!!!! Players participating: ");
-            for (Player player : playersInWar) {
-                gameView.println(player.getName());
-            }
-            break;
+            case 0:
+                List<Player> playersInWar = table.getPlayersInRound();
+                gameView.println("WAR!!!! Players participating: ");
+                for (Player player : playersInWar) {
+                    gameView.println(player.getName());
+                }
+                break;
 
-        case -1:
-            gameView.println("You lost! Now its " + table.getCurrentPlayer().getName() + "\'s turn.");
-            break;
+            case -1:
+                gameView.println("You lost! Now its " + table.getCurrentPlayer().getName() + "\'s turn.");
+                break;
         }
     }
 
@@ -78,50 +78,52 @@ public class TableController {
             gameView.printMenu();
             int choice = gameView.getNumericInput();
             switch (choice) {
-            case 1:
-                playGame();
-                break;
-            case 2:
-                String name = editorView.getCardName();
-                List<Integer> attributesToAdd = editorView.getAttributesValues(); // zmienic zeby przyjmowalo tylko
-                // dodatnie indeksy
-                try {
-                    cardDAO.insertNew(name, attributesToAdd);
-                } catch (DAOException e) {
-                    e.printStackTrace();
-                }
+                case 1:
+                    playGame();
+                    break;
+                case 2:
+                    String name = editorView.getCardName();
+                    List<Integer> attributesToAdd = editorView.getAttributesValues(); // zmienic zeby przyjmowalo tylko
+                    // dodatnie indeksy
+                    try {
+                        cardDAO.insertNew(name, attributesToAdd);
+                    } catch (DAOException e) {
+                        e.printStackTrace();
+                    }
 
-                break;
+                    break;
 
-            case 3:
-                try {
-                    editorView.printListOfCards(cardDAO.getAllCards());
-                    int cardId = editorView.getCardId();
-                    List<Integer> attributesToEdit = editorView.getAttributesValues();
-                    cardDAO.update(cardId, attributesToEdit);
-                } catch (DAOException e) {
-                    e.printStackTrace();
-                }
-                
-                break;
+                case 3:
+                    try {
+                        editorView.printListOfCards(cardDAO.getAllCards());
+                        int cardId = editorView.getCardId();
+                        int dbCardId = cardDAO.getAllCards().get(cardId - 1).getId();
+                        List<Integer> attributesToEdit = editorView.getAttributesValues();
+                        cardDAO.update(dbCardId, attributesToEdit);
+                    } catch (DAOException e) {
+                        e.printStackTrace();
+                    }
 
-            case 4:
-                try {
-                    editorView.printListOfCards(cardDAO.getAllCards());
-                    int cardIdToDelete = editorView.getCardId();
-                    cardDAO.delete(cardIdToDelete);
-                } catch (DAOException e) {
-                    e.printStackTrace();
-                }
-                
-                break;
+                    break;
 
-            case 5:
-                isGameOn = false;
-                break;
+                case 4:
+                    try {
+                        editorView.printListOfCards(cardDAO.getAllCards());
+                        int cardIdToDelete = editorView.getCardId();
+                        int dbCardId = cardDAO.getAllCards().get(cardIdToDelete - 1).getId();
+                        cardDAO.delete(dbCardId);
+                    } catch (DAOException e) {
+                        e.printStackTrace();
+                    }
 
-            default:
-                System.out.println("Wrong choice!");
+                    break;
+
+                case 5:
+                    isGameOn = false;
+                    break;
+
+                default:
+                    System.out.println("Wrong choice!");
             }
         }
     }

@@ -12,7 +12,7 @@ public class EditorView extends View {
     private List<String> attributeNames;
 
     public EditorView() {
-        String[] attr = { "Strength", "Melee", "Magic", "Dexterity", "Intelligence" };
+        String[] attr = {"Strength", "Melee", "Magic", "Dexterity", "Intelligence"};
         List<String> attributeNames = new ArrayList(Arrays.asList(attr));
         this.attributeNames = attributeNames;
     }

@@ -17,6 +17,7 @@ public class Card {
         this.dexterity = dexterity;
         this.intelligence = intelligence;
         this.name = name;
+        this.id = id;
     }
 
     public int getId() {
