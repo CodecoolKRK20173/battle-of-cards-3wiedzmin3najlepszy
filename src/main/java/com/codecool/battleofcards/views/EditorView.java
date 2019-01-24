@@ -12,12 +12,13 @@ public class EditorView extends View {
     private List<String> attributeNames;
 
     public EditorView() {
-        String[] attr = { "Strength", "Melee", "Magic", "Dexterity", "Intelligence" };
+        String[] attr = {"Strength", "Melee", "Magic", "Dexterity", "Intelligence"};
         List<String> attributeNames = new ArrayList(Arrays.asList(attr));
         this.attributeNames = attributeNames;
     }
 
     public String getCardName() {
+        clearScreen();
         println("Enter card name: ");
         return scanner.nextLine();
     }
@@ -34,23 +35,23 @@ public class EditorView extends View {
 
     private String getAttributeValue() {
         String value = scanner.nextLine();
-        while (!(value.matches("[1-9]|10") || value.isEmpty())) {
+        while (!(value.matches("^[1-9]+$") || value.isEmpty())) {
             println("Wrong attribute value. Try again.");
             value = scanner.nextLine();
         }
-        if (value.matches("[1-9]|10")) {
+
+        if (value.matches("^[1-9]+$")) {
+            clearScreen();
             return value;
-        }
-        else if(value.isEmpty()){
-            print("zero");
-            return "0";
-        } 
-        else {
+        } else {
+            clearScreen();
+
             return "-1";
         }
     }
 
     public void printListOfCards(List<Card> cards) {
+        System.out.println("List of cards:\n");
         for (int i = 0; i < cards.size(); i++) {
             Card card = cards.get(i);
             println((i + 1) + ". " + card.getName());
@@ -58,7 +59,7 @@ public class EditorView extends View {
     }
 
     public int getCardId() {
-        println("Enter card Id: ");
+        println("\nEnter card Id: ");
         return getNumericInput();
     }
 

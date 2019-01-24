@@ -3,7 +3,7 @@ package com.codecool.battleofcards.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class DatabaseConnector {
+class DatabaseConnector {
     private static DatabaseConnector single_instance = null;
     Connection c;
 
@@ -11,14 +11,14 @@ public class DatabaseConnector {
 
     }
 
-    public static DatabaseConnector getInstance() {
+    static DatabaseConnector getInstance() {
         if (single_instance == null)
             single_instance = new DatabaseConnector();
 
         return single_instance;
     }
 
-    public void connectToDatabase() {
+    void connectToDatabase() {
         c = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -27,7 +27,5 @@ public class DatabaseConnector {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-
-        System.out.println("Opened database successfully");
     }
 }

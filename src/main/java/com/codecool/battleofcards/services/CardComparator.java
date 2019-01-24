@@ -28,21 +28,21 @@ public class CardComparator implements Comparator<Card> {
         int attrValue = 0;
 
         switch (attributeType) {
-        case STRENGTH:
-            attrValue = card.getStrength();
-            break;
-        case MELEE:
-            attrValue = card.getMelee();
-            break;
-        case MAGIC:
-            attrValue = card.getMagic();
-            break;
-        case DEXTERITY:
-            attrValue = card.getDexterity();
-            break;
-        case INTELLIGENCE:
-            attrValue = card.getIntelligence();
-            break;
+            case STRENGTH:
+                attrValue = card.getStrength();
+                break;
+            case MELEE:
+                attrValue = card.getMelee();
+                break;
+            case MAGIC:
+                attrValue = card.getMagic();
+                break;
+            case DEXTERITY:
+                attrValue = card.getDexterity();
+                break;
+            case INTELLIGENCE:
+                attrValue = card.getIntelligence();
+                break;
         }
 
         return attrValue;

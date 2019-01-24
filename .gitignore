@@ -35,4 +35,6 @@ hs_err_pid*
 .classpath
 .settings
 /target
+.vscode
+test.db
 

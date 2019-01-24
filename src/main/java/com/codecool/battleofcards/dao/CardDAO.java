@@ -1,14 +1,17 @@
 package com.codecool.battleofcards.dao;
 
 import com.codecool.battleofcards.services.Card;
+import com.codecool.battleofcards.views.EditorView;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CardDAO implements ICardDAO {
     private DatabaseConnector databaseConnector;
+    private EditorView view = new EditorView();
 
     public CardDAO() {
         this.databaseConnector = DatabaseConnector.getInstance();
@@ -23,8 +26,8 @@ public class CardDAO implements ICardDAO {
         try {
             databaseConnector.connectToDatabase();
             stmt = databaseConnector.c.createStatement();
-            String sql = "CREATE TABLE CARDS " +
-                    "(ID INT PRIMARY KEY     NOT NULL," +
+            String sql = "CREATE TABLE IF NOT EXISTS CARDS " +
+                    "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     " NAME           TEXT    NOT NULL, " +
                     " STRENGTH       INT     NOT NULL, " +
                     " RAPIDITY       INT     NOT NULL, " +
@@ -39,7 +42,7 @@ public class CardDAO implements ICardDAO {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Table created successfully");
+        view.println("Table created successfully");
     }
 
     private void insertSampleToTable() {
@@ -50,8 +53,8 @@ public class CardDAO implements ICardDAO {
             databaseConnector.c.setAutoCommit(false);
 
             stmt = databaseConnector.c.createStatement();
-            String sql = "INSERT INTO CARDS (ID,NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
-                    "VALUES (1, 'SampleName', 10, 10, 10, 10, 10);";
+            String sql = "INSERT INTO CARDS (NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
+                    "VALUES ('SampleName', 10, 10, 10, 10, 10);";
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -61,11 +64,11 @@ public class CardDAO implements ICardDAO {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Insert successfully");
+        view.println("Insert successfully");
     }
 
     @Override
-    public void insertNew(String name, int strength, int rapidity, int magicPower, int defence, int intelligence) throws DAOException {
+    public void insertNew(String name, List<Integer> stats) throws DAOException {
         Statement stmt = null;
 
         try {
@@ -73,8 +76,8 @@ public class CardDAO implements ICardDAO {
             databaseConnector.c.setAutoCommit(false);
 
             stmt = databaseConnector.c.createStatement();
-            String sql = "INSERT INTO CARDS (ID,NAME,AGE,ADDRESS,SALARY) " +
-                    "VALUES (" + name + ", " + strength + ", " + rapidity + ", " + magicPower + ", " + defence + ", " + intelligence + ");";
+            String sql = "INSERT INTO CARDS (NAME,STRENGTH,RAPIDITY,MAGICPOWER,DEFENCE,INTELLIGENCE) " +
+                    "VALUES ('" + name + "', " + stats.get(0) + ", " + stats.get(1) + ", " + stats.get(2) + ", " + stats.get(3) + ", " + stats.get(4) + ");";
             stmt.executeUpdate(sql);
 
             stmt.close();
@@ -83,11 +86,11 @@ public class CardDAO implements ICardDAO {
         } catch (SQLException e) {
             throw new DAOException("Exception occured during inserting new card to database");
         }
-        System.out.println("Records created successfully");
+        view.println("Records created successfully");
     }
 
     @Override
-    public void update(int id, String name, int strength, int rapidity, int magicPower, int defence, int intelligence) throws DAOException {
+    public void update(int id, List<Integer> stats) throws DAOException {
         Statement stmt = null;
 
         try {
@@ -97,10 +100,13 @@ public class CardDAO implements ICardDAO {
             stmt = databaseConnector.c.createStatement();
             String sql = "UPDATE CARDS\n" +
                     "SET\n" +
-                    " NAME = '" + name + "',\n" +
-                    " STRENGTH =" + String.valueOf(strength) + "\n" +
+                    " STRENGTH =" + stats.get(0) + ",\n" +
+                    " RAPIDITY =" + stats.get(1) + ",\n" +
+                    " MAGICPOWER =" + stats.get(2) + ",\n" +
+                    " DEFENCE =" + stats.get(3) + ",\n" +
+                    " INTELLIGENCE =" + stats.get(4) + "\n" +
                     " WHERE\n" +
-                    " ID=" + String.valueOf(id) + ";";
+                    " ID=" + id + ";";
             stmt.executeUpdate(sql);
             databaseConnector.c.commit();
 
@@ -111,7 +117,7 @@ public class CardDAO implements ICardDAO {
         } catch (Exception e) {
             throw new DAOException("Exception occured during updating existing card in database");
         }
-        System.out.println("Updated successfully");
+        view.println("Updated successfully");
     }
 
     @Override
@@ -132,7 +138,7 @@ public class CardDAO implements ICardDAO {
         } catch (Exception e) {
             throw new DAOException("Exception occured during deletion existing card in database");
         }
-        System.out.println("Deleted successfully");
+        view.println("Deleted successfully");
     }
 
     @Override
@@ -150,11 +156,12 @@ public class CardDAO implements ICardDAO {
             while (rs.next()) {
                 String name = rs.getString("name");
                 int strength = rs.getInt("strength");
-                int rapidity = rs.getInt("rapidity");
-                int magicPower = rs.getInt("magicpower");
-                int defence = rs.getInt("defence");
+                int melee = rs.getInt("rapidity");
+                int magic = rs.getInt("magicpower");
+                int dexterity = rs.getInt("defence");
                 int intelligence = rs.getInt("intelligence");
-                cardsList.add(new Card(strength, rapidity, magicPower, defence, intelligence, name));
+                int cardId = rs.getInt("id");
+                cardsList.add(new Card(strength, melee, magic, dexterity, intelligence, name, cardId));
             }
 
             rs.close();
@@ -163,8 +170,6 @@ public class CardDAO implements ICardDAO {
         } catch (SQLException e) {
             throw new DAOException("Exception occured during geting all existing cards in database");
         }
-        System.out.println("Operation done successfully");
-
         return cardsList;
     }
 
@@ -182,12 +187,13 @@ public class CardDAO implements ICardDAO {
 
             String name = rs.getString("name");
             int strength = rs.getInt("strength");
-            int rapidity = rs.getInt("rapidity");
-            int magicPower = rs.getInt("magicpower");
-            int defence = rs.getInt("defence");
+            int melee = rs.getInt("rapidity");
+            int magic = rs.getInt("magicpower");
+            int dexterity = rs.getInt("defence");
             int intelligence = rs.getInt("intelligence");
+            int cardId = rs.getInt("id");
 
-            card = new Card(strength, rapidity, magicPower, defence, intelligence, name);
+            card = new Card(strength, melee, magic, dexterity, intelligence, name, cardId);
 
             rs.close();
             stmt.close();
@@ -195,7 +201,7 @@ public class CardDAO implements ICardDAO {
         } catch (Exception e) {
             throw new DAOException("Exception occured during geting existing card by ID");
         }
-        System.out.println("Operation done successfully");
+        view.println("Operation done successfully");
 
         return card;
     }
