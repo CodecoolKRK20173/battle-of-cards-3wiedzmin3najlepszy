@@ -9,6 +9,7 @@ import com.codecool.battleofcards.services.*;
 import com.codecool.battleofcards.views.EditorView;
 import com.codecool.battleofcards.views.GameView;
 
+
 public class TableController {
     private Table table;
     private GameView gameView;
@@ -47,7 +48,6 @@ public class TableController {
                 sWinners += winner.getName();
                 if (i != winners.size() - 1)
                     sWinners += " and ";
-
             }
             gameView.printWinningMessage(sWinners, table.getPlayers());
         }
@@ -58,7 +58,12 @@ public class TableController {
         Player activePlayer = table.getCurrentPlayer();
         gameView.showCard(activePlayer.getTopCard(), activePlayer.getName());
         int attr = gameView.getAttribute();
+        gameView.showPlayersTopCards(table.getPlayersInRound());
         int result = table.compareCards(attr);
+
+
+
+
         switch (result) {
             case 1:
                 gameView.printResultMessage(table.getCurrentPlayer().getName() + " wins the round!");
@@ -76,6 +81,7 @@ public class TableController {
                 gameView.println("You lost! Now its " + table.getCurrentPlayer().getName() + "\'s turn.");
                 break;
         }
+
     }
 
     public List<Player> getPlayers(int number) {

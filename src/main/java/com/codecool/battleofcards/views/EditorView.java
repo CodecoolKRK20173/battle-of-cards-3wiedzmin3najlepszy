@@ -39,11 +39,13 @@ public class EditorView extends View {
             println("Wrong attribute value. Try again.");
             value = scanner.nextLine();
         }
+
         if (value.matches("^[1-9]+$")) {
             clearScreen();
             return value;
         } else {
             clearScreen();
+
             return "-1";
         }
     }

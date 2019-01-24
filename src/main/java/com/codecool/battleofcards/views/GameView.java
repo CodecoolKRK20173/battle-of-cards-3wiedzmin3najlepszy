@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.codecool.battleofcards.services.Card;
 import com.codecool.battleofcards.services.Player;
+import java.lang.StringBuilder;
+import java.util.ArrayList;
 
 public class GameView extends View {
 
@@ -24,6 +26,69 @@ public class GameView extends View {
         println(green + "Statistics: \n\n" + "(1) Strength: " + card.getStrength() + "\n" + "(2) Melee: " + card.getMelee() + "\n"
                 + "(3) Magic: " + card.getMagic() + "\n" + "(4) Dexterity: " + card.getDexterity() + "\n" + "(5) Intelligence: "
                 + card.getIntelligence() + "\n" + defaultColor);
+    }
+
+    public void showPlayersTopCards(List<Player> players){
+        int numberOfRows = 7;
+        final Object[][] table = new Object[numberOfRows][];
+        List<String> names = new ArrayList<>();
+        List<String> cardNames = new ArrayList<>();
+        List<String> strengths = new ArrayList<>();
+        List<String> melees = new ArrayList<>();
+        List<String> magics = new ArrayList<>();
+        List<String> dexterities = new ArrayList<>();
+        List<String> intelligences = new ArrayList<>();
+
+
+
+        // StringBuilder names = new StringBuilder();
+        // StringBuilder cardNames = new StringBuilder();
+        // StringBuilder strengths = new StringBuilder();
+        // StringBuilder melees = new StringBuilder();
+        // StringBuilder magics = new StringBuilder();
+        // StringBuilder dexterities = new StringBuilder();
+        // StringBuilder intelligences = new StringBuilder();
+            
+        for (Player player : players) {
+            if (player.getCards().isEmpty()){
+                continue;
+            }
+                Card card = player.getTopCard();
+                // names.append(String.format("%10s", "Name: " + player.getName() + "   "));
+                // cardNames.append(String.format("%10s", "Name of card: " +card.getName() + "   "));
+                // strengths.append("Strength: " + card.getStrength() + "   ");
+                // melees.append("Melee: " + card.getMelee() + "   ");
+                // magics.append("Magic: " + card.getMagic() + "   ");
+                // dexterities.append("Dexterity: " + card.getDexterity() + "   ");
+                // intelligences.append("Intelligence: " + card.getIntelligence() + "   "); 
+
+                names.add(player.getName());
+                cardNames.add(card.getName());
+                strengths.add(Integer.toString(card.getStrength()));
+                melees.add(Integer.toString(card.getMelee()));
+                magics.add(Integer.toString(card.getMagic()));
+                dexterities.add(Integer.toString(card.getDexterity()));
+                intelligences.add(Integer.toString(card.getIntelligence()));
+            }
+
+        table[0] = names.toArray();
+        table[1] = cardNames.toArray();
+        table[2] = strengths.toArray();
+        table[3] = melees.toArray();
+        table[4] = magics.toArray();
+        table[5] = dexterities.toArray();
+        table[6] = intelligences.toArray();
+
+        
+        for (final Object[] row : table) {
+            for (Object str : row) {
+                // System.out.print((String) str);
+                System.out.format("%15s", str);
+            }
+            System.out.println();
+            // System.out.format("%15s%15s%15s%15s%15s%15s%15s\n", row);
+        }
+
     }
 
     public int getAttribute() {
