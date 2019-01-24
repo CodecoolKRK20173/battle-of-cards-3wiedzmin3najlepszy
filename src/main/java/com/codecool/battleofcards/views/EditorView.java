@@ -35,12 +35,12 @@ public class EditorView extends View {
 
     private String getAttributeValue() {
         String value = scanner.nextLine();
-        while (!(value.matches("^[1-9]+$") || value.isEmpty())) {
+        while (!(value.matches("^[1-9]+[0-9]*$") || value.isEmpty())) {
             println("Wrong attribute value. Try again.");
             value = scanner.nextLine();
         }
 
-        if (value.matches("^[1-9]+$")) {
+        if (value.matches("^[1-9]+[0-9]*$")) {
             clearScreen();
             return value;
         } else {

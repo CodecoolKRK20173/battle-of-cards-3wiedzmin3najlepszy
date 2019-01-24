@@ -13,11 +13,11 @@ public class DAOInputService {
     }
 
     public void addNewCard(String name, List<Integer> attributesToAdd) {
-        for (Integer attr : attributesToAdd) {
-            if (attr < 0) {
-                attr = 0;
-            } else if (attr > 1000) {
-                attr = 1000;
+        for (int i = 0; i < attributesToAdd.size(); i++) {
+            if (attributesToAdd.get(i) < 0) {
+                attributesToAdd.set(i, 0);
+            } else if (attributesToAdd.get(i) > 100) {
+                attributesToAdd.set(i, 100);
             }
         }
 
